@@ -1,0 +1,5 @@
+rootProject.name = 'ecommerce'
+
+include('eureka')
+include('service')
+include('service:user')
