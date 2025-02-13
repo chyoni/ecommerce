@@ -1,14 +1,16 @@
 server:
-  port: 9001
+  port: 0
 
 spring:
   application:
     name: user-service
 
 eureka:
+  instance:
+    instance-id: ${spring.cloud.client.hostname}:${spring.application.instance_id:${random.value}} # 동일한 애플리케이션이라도 여러개 띄웠을 때 고유 ID 값을 가져서 유레카에 잘 등록되도록
   client:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://127.0.0.1:8761/eureka
+      defaultZone: http://127.0.0.1:8761/eureka # 실행중인 Eureka Server (이 애플리케이션을 Eureka Server 에 등록해야 하므로)
 
