@@ -6,6 +6,7 @@ import cwchoiit.ecommerce.user.service.request.CreateUserRequest;
 import cwchoiit.ecommerce.user.service.response.CreateUserResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +18,7 @@ import java.util.UUID;
 public class UserService {
 
     private final UsersRepository usersRepository;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Transactional
     public CreateUserResponse createUser(CreateUserRequest request) {
@@ -25,7 +27,7 @@ public class UserService {
                         request.getEmail(),
                         request.getName(),
                         UUID.randomUUID().toString(),
-                        request.getPassword()
+                        bCryptPasswordEncoder.encode(request.getPassword())
                 )
         );
 
