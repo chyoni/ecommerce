@@ -1,0 +1,34 @@
+server:
+  port: 8000
+
+eureka:
+  client:
+    register-with-eureka: false
+    fetch-registry: false
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka
+
+spring:
+  application:
+    name: apigateway-service
+  cloud:
+    gateway:
+      routes:
+        - id: user-service-9001
+          uri: http://localhost:9001/
+          predicates:
+            - Path=/first-service/**
+          filters:
+            - CustomFilter
+        - id: user-service-9002
+          uri: http://localhost:9002/
+          predicates:
+            - Path=/second-service/**
+          filters:
+            - CustomFilter
+      default-filters:
+        - name: GlobalFilter
+          args:
+            baseMessage: Ecommerce Global Filter
+            preLogger: true
+            postLogger: true

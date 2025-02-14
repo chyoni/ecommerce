@@ -1,5 +1,6 @@
 rootProject.name = 'ecommerce'
 
 include('eureka')
+include('apigateway')
 include('service')
 include('service:user')

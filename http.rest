@@ -1,0 +1,7 @@
+### GET first service
+GET http://localhost:8000/first-service
+Accept: application/json
+
+### GET second service
+GET http://localhost:8000/second-service
+Accept: application/json
