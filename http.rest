@@ -1,3 +1,15 @@
 ### GET first service
 GET http://localhost:8000/users/healthz
 Accept: application/json
+
+### POST create user
+POST http://localhost:8000/users
+Content-Type: application/json
+
+{
+    "email": "noreply@noreply.com",
+    "name": "cwchoiit",
+    "password": "1234"
+}
+
+
