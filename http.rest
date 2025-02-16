@@ -1,3 +1,5 @@
+# USER SERVICE
+
 ### GET User Service Health Check
 GET http://localhost:8000/users/healthz
 Accept: application/json
@@ -17,5 +19,12 @@ GET http://localhost:8000/users?page=1&pageSize=10
 Accept: application/json
 
 ### GET User
-GET http://localhost:8000/users/db74371b-1ecf-4636-9b2f-6d0b8b1c2b86
+GET http://localhost:8000/users/149395304454860800
+Accept: application/json
+
+
+# CATALOG SERVICE
+
+### GET Catalog Service Health Check
+GET http://localhost:8000/catalogs/healthz
 Accept: application/json

@@ -2,5 +2,12 @@ rootProject.name = 'ecommerce'
 
 include('eureka')
 include('apigateway')
+
+include('common')
+include('common:snowflake')
+
 include('service')
 include('service:user')
+include('service:catalog')
+
+

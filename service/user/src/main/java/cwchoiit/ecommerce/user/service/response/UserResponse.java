@@ -10,13 +10,13 @@ import java.time.LocalDateTime;
 public class UserResponse {
     private String email;
     private String name;
-    private String userId;
+    private Long userId;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 
     public static UserResponse from(String email,
                                     String name,
-                                    String userId,
+                                    Long userId,
                                     LocalDateTime createdAt,
                                     LocalDateTime modifiedAt) {
         UserResponse userResponse = new UserResponse();

@@ -13,25 +13,23 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Users {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(nullable = false, unique = true)
+    private Long userId;
     @Column(nullable = false, length = 50)
     private String email;
     @Column(nullable = false, length = 50)
     private String name;
-    @Column(nullable = false, unique = true)
-    private String userId;
     @Column(nullable = false)
     private String encryptedPassword;
 
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 
-    public static Users of(String email, String name, String userId, String encryptedPassword) {
+    public static Users of(Long userId, String email, String name, String encryptedPassword) {
         Users users = new Users();
+        users.userId = userId;
         users.email = email;
         users.name = name;
-        users.userId = userId;
         users.encryptedPassword = encryptedPassword;
         users.createdAt = LocalDateTime.now();
         users.modifiedAt = LocalDateTime.now();

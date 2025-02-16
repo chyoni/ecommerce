@@ -21,9 +21,9 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
      * @return {@code List<Users>}
      */
     @Query(
-            value = "select id, email, name, user_id, encrypted_password, created_at, modified_at " +
+            value = "select email, name, user_id, encrypted_password, created_at, modified_at " +
                     "from users " +
-                    "order by id desc " +
+                    "order by user_id desc " +
                     "limit :limit offset :offset ",
             nativeQuery = true
     )
@@ -32,7 +32,7 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
     @Query(
             value = "select count(*) " +
                     "from (" +
-                    "   select id " +
+                    "   select user_id " +
                     "   from users " +
                     "   limit :limit " +
                     ") t ",
@@ -40,5 +40,5 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
     )
     Long count(@Param("limit") Long limit);
 
-    Optional<Users> findByUserId(String userId);
+    Optional<Users> findByUserId(Long userId);
 }

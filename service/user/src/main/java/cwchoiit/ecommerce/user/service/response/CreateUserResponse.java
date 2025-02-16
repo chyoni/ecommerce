@@ -12,9 +12,9 @@ import java.time.LocalDateTime;
 @ToString
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CreateUserResponse {
+    private Long userId;
     private String email;
     private String name;
-    private String userId;
     private LocalDateTime createdAt;
 
     public static CreateUserResponse from(Users user) {

@@ -1,5 +1,6 @@
 package cwchoiit.ecommerce.user.service;
 
+import cwchoiit.ecommerce.common.snowflake.Snowflake;
 import cwchoiit.ecommerce.user.entity.Users;
 import cwchoiit.ecommerce.user.repository.UsersRepository;
 import cwchoiit.ecommerce.user.service.request.CreateUserRequest;
@@ -15,13 +16,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.UUID;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class UserService {
 
+    private final Snowflake snowflake = new Snowflake();
     private final UsersRepository usersRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -29,9 +31,9 @@ public class UserService {
     public CreateUserResponse createUser(CreateUserRequest request) {
         Users newUser = usersRepository.save(
                 Users.of(
+                        snowflake.nextId(),
                         request.getEmail(),
                         request.getName(),
-                        UUID.randomUUID().toString(),
                         bCryptPasswordEncoder.encode(request.getPassword())
                 )
         );
@@ -39,7 +41,7 @@ public class UserService {
         return CreateUserResponse.from(newUser);
     }
 
-    public UserResponse getUserByUserId(String userId) {
+    public UserResponse getUserByUserId(Long userId) {
         Users findUser = usersRepository.findByUserId(userId)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
