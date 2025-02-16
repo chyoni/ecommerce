@@ -24,4 +24,12 @@ public class CreateUserRequest {
     @NotNull(message = "Password cannot be null")
     @Size(min = 4, message = "Password not be less than 4 characters")
     private String password;
+
+    public static CreateUserRequest of(String email, String name, String password) {
+        CreateUserRequest request = new CreateUserRequest();
+        request.email = email;
+        request.name = name;
+        request.password = password;
+        return request;
+    }
 }
