@@ -1,4 +1,4 @@
-### GET first service
+### GET User Service Health Check
 GET http://localhost:8000/users/healthz
 Accept: application/json
 
@@ -7,8 +7,15 @@ POST http://localhost:8000/users
 Content-Type: application/json
 
 {
+    "email": "noreply@noreply.com",
     "name": "cwchoiit",
     "password": "1234"
 }
 
+### GET Users
+GET http://localhost:8000/users?page=1&pageSize=10
+Accept: application/json
 
+### GET User
+GET http://localhost:8000/users/db74371b-1ecf-4636-9b2f-6d0b8b1c2b86
+Accept: application/json

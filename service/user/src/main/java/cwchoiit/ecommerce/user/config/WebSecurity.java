@@ -21,8 +21,10 @@ public class WebSecurity {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(authorizeRequests ->
-                        authorizeRequests.requestMatchers("/users/**").permitAll()
+                .authorizeHttpRequests(authorizeRequests -> authorizeRequests
+                        .requestMatchers("/error", "/css/**", "/js/**", "/images/**").permitAll()
+                        .requestMatchers("/users/**").permitAll()
+                        .anyRequest().authenticated()
                 );
         return http.build();
     }
