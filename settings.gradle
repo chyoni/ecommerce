@@ -9,5 +9,6 @@ include('common:snowflake')
 include('service')
 include('service:user')
 include('service:catalog')
+include('service:orders')
 
 
