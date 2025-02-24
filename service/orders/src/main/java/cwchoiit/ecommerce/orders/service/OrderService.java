@@ -24,12 +24,12 @@ public class OrderService {
     private final OrdersRepository ordersRepository;
 
     @Transactional
-    public OrderCreateResponse createOrder(OrderCreateRequest request) {
+    public OrderCreateResponse createOrder(Long userId, OrderCreateRequest request) {
         Orders newOrder = ordersRepository.save(
                 Orders.create(
                         snowflake.nextId(),
                         request.getProductId(),
-                        request.getUserId(),
+                        userId,
                         request.getQuantity(),
                         request.getUnitPrice()
                 )
