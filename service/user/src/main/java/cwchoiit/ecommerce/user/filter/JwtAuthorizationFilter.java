@@ -26,6 +26,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
+        // API Gateway 에서 토큰을 먼저 인증한 후, 토큰에서 꺼낸 userId 값을 헤더에 포함해서 요청을 전달
         String userId = request.getHeader("X-User-Id");
 
         if (userId != null) {
