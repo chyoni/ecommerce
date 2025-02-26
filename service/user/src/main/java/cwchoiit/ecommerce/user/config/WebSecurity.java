@@ -1,6 +1,8 @@
 package cwchoiit.ecommerce.user.config;
 
 import cwchoiit.ecommerce.user.filter.JwtAuthenticationFilter;
+import cwchoiit.ecommerce.user.filter.JwtAuthorizationFilter;
+import cwchoiit.ecommerce.user.repository.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +14,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.intercept.AuthorizationFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
@@ -20,6 +23,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurity {
 
     private final AuthenticationConfiguration authenticationConfiguration;
+    private final UsersRepository usersRepository;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -35,13 +39,16 @@ public class WebSecurity {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .addFilterAt(new JwtAuthenticationFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class)
+                .addFilterAt(new JwtAuthorizationFilter(usersRepository), AuthorizationFilter.class)
                 .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
-                .authorizeHttpRequests(authorizeRequests ->
-                        authorizeRequests.anyRequest().permitAll() // API Gateway 에서 인가 처리하기 때문
+                .authorizeHttpRequests(authorizeRequests -> authorizeRequests
+                        .requestMatchers("/error", "/css/**", "/js/**", "/images/**").permitAll()
+                        .requestMatchers("/signup", "/login").permitAll()
+                        .anyRequest().authenticated()
                 );
         return http.build();
     }

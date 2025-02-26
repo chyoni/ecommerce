@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-import java.security.SignatureException;
 import java.util.Objects;
+import java.util.Optional;
 
 @Slf4j
 @Component
@@ -36,11 +36,20 @@ public class JwtAuthorizationFilter extends AbstractGatewayFilterFactory<JwtAuth
             String authorization = Objects.requireNonNull(request.getHeaders().get(HttpHeaders.AUTHORIZATION)).getFirst();
             String token = authorization.replace("Bearer ", "");
 
-            if (!isJwtValid(token)) {
+            Optional<String> userIdByToken = getUserIdByToken(token);
+            if (userIdByToken.isEmpty()) {
                 return onError(exchange, "JWT is not valid");
             }
 
-            return chain.filter(exchange);
+            String userId = userIdByToken.get();
+            if (userId.isEmpty() || userId.equals("null")) {
+                return onError(exchange, "JWT is not valid");
+            }
+
+            ServerHttpRequest updateRequest = request.mutate().header("X-User-Id", userId).build();
+            return chain.filter(
+                    exchange.mutate().request(updateRequest).build()
+            );
         });
     }
 
@@ -52,13 +61,12 @@ public class JwtAuthorizationFilter extends AbstractGatewayFilterFactory<JwtAuth
         return response.setComplete();
     }
 
-    private boolean isJwtValid(String token) {
+    private Optional<String> getUserIdByToken(String token) {
         try {
-            String userId = JwtManager.getUserIdByToken(token);
-            return userId != null && !userId.isEmpty() && !userId.equals("null");
+            return Optional.ofNullable(JwtManager.getUserIdByToken(token));
         } catch (Exception e) {
             log.error("[isJwtValid:60] JWT validation failed, token : {}", token, e);
-            return false;
+            return Optional.empty();
         }
     }
 
