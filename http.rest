@@ -2,17 +2,29 @@
 
 ### GET User Service Health Check
 GET http://localhost:8000/users/healthz
+Authorization: {{auth_token}}
 Accept: application/json
 
-### POST create user
-POST http://localhost:8000/users
+### POST signup
+POST http://localhost:8000/users/signup
 Content-Type: application/json
 
 {
-    "email": "noreply@noreply.com",
+    "email": "noreply999@noreply.com",
     "name": "cwchoiit",
     "password": "1234"
 }
+
+### POST login
+POST http://localhost:8000/users/login
+Content-Type: application/json
+
+{
+  "email": "noreply@noreply.com",
+  "password": "1234"
+}
+
+> {% client.global.set("auth_token", response.headers.valueOf("Authorization")); %}
 
 ### GET Users
 GET http://localhost:8000/users?page=1&pageSize=10

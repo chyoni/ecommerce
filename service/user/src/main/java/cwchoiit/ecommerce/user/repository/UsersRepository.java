@@ -41,4 +41,6 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
     Long count(@Param("limit") Long limit);
 
     Optional<Users> findByUserId(Long userId);
+
+    Optional<Users> findByEmail(String email);
 }

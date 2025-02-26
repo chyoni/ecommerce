@@ -10,6 +10,9 @@ import cwchoiit.ecommerce.user.service.response.UserResponse;
 import cwchoiit.ecommerce.user.utils.PageLimitCalculator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,11 +20,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static cwchoiit.ecommerce.user.entity.Users.Role.ROLE_USER;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class UserService {
+public class UserService implements UserDetailsService {
 
     private final Snowflake snowflake = new Snowflake();
     private final UsersRepository usersRepository;
@@ -34,7 +39,8 @@ public class UserService {
                         snowflake.nextId(),
                         request.getEmail(),
                         request.getName(),
-                        bCryptPasswordEncoder.encode(request.getPassword())
+                        bCryptPasswordEncoder.encode(request.getPassword()),
+                        ROLE_USER
                 )
         );
 
@@ -70,5 +76,11 @@ public class UserService {
                 users,
                 usersRepository.count(PageLimitCalculator.calculatePageLimit(page, pageSize, 10L))
         );
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        return usersRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 }

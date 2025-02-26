@@ -5,6 +5,8 @@ include('apigateway')
 
 include('common')
 include('common:snowflake')
+include('common:serializer')
+include('common:jwt')
 
 include('service')
 include('service:user')

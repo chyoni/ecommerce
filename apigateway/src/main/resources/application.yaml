@@ -17,39 +17,36 @@ spring:
         - id: user-service
           uri: lb://USER-SERVICE
           predicates:
+            - Path=/users/login
+            - Method=POST
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/users/(?<segment>.*), /$\{segment}
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/users/signup
+            - Method=POST
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/users/(?<segment>.*), /$\{segment}
+        - id: user-service
+          uri: lb://USER-SERVICE
+          predicates:
             - Path=/users/**
           filters:
-            - name: CustomFilter
-            - name: LoggingFilter
-              args:
-                baseMessage: Hi, there
-                preLogger: true
-                postLogger: true
+            - JwtAuthorizationFilter
         - id: catalog-service
           uri: lb://CATALOG-SERVICE
           predicates:
             - Path=/catalogs/**
-          filters:
-            - name: CustomFilter
-            - name: LoggingFilter
-              args:
-                baseMessage: Hi, there
-                preLogger: true
-                postLogger: true
         - id: order-service
           uri: lb://ORDERS-SERVICE
           predicates:
             - Path=/orders/**
-          filters:
-            - name: CustomFilter
-            - name: LoggingFilter
-              args:
-                baseMessage: Hi, there
-                preLogger: true
-                postLogger: true
       default-filters:
-        - name: GlobalFilter
+        - name: LoggingFilter
           args:
-            baseMessage: Ecommerce Global Filter
+            baseMessage: Ecommerce Logging Filter
             preLogger: true
             postLogger: true

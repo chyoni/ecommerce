@@ -8,4 +8,6 @@ dependencies {
     runtimeOnly 'com.h2database:h2'
 
     implementation project(':common:snowflake')
+    implementation project(':common:serializer')
+    implementation project(':common:jwt')
 }

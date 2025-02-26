@@ -35,3 +35,7 @@ out/
 
 ### VS Code ###
 .vscode/
+
+service/user/src/main/java/cwchoiit/ecommerce/user/jwt/JwtProperties.java
+
+common/jwt/src/main/java/cwchoiit/ecommerce/common/jwt/JwtProperties.java

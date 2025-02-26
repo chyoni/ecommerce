@@ -39,11 +39,4 @@ public class UserController {
     public ResponseEntity<UserResponse> getUser(@PathVariable("userId") Long userId) {
         return ResponseEntity.ok(userService.getUserByUserId(userId));
     }
-
-    @PostMapping
-    public ResponseEntity<CreateUserResponse> createUser(@RequestBody @Validated CreateUserRequest request) {
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(userService.createUser(request));
-    }
 }
