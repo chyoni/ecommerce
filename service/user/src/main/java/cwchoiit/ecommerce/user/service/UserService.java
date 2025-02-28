@@ -55,6 +55,7 @@ public class UserService implements UserDetailsService {
                 findUser.getEmail(),
                 findUser.getName(),
                 findUser.getUserId(),
+                findUser.getRole(),
                 findUser.getCreatedAt(),
                 findUser.getModifiedAt());
     }
@@ -66,6 +67,7 @@ public class UserService implements UserDetailsService {
                                 user.getEmail(),
                                 user.getName(),
                                 user.getUserId(),
+                                user.getRole(),
                                 user.getCreatedAt(),
                                 user.getModifiedAt()
                         )

@@ -46,6 +46,7 @@ public class JwtAuthorizationFilter extends AbstractGatewayFilterFactory<JwtAuth
                 return onError(exchange, "JWT is not valid");
             }
 
+            // 우선적으로 API Gateway 가 인증을 처리하고, 인증 처리가 되면 토큰의 Subject 인 userId를 각 서비스에게 전달하여 서비스에서도 한번 더 인증을 수행할 것
             ServerHttpRequest updateRequest = request.mutate().header("X-User-Id", userId).build();
             return chain.filter(
                     exchange.mutate().request(updateRequest).build()

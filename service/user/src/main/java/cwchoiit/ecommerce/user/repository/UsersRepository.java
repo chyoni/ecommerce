@@ -21,7 +21,7 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
      * @return {@code List<Users>}
      */
     @Query(
-            value = "select email, name, user_id, encrypted_password, created_at, modified_at " +
+            value = "select email, name, user_id, encrypted_password, created_at, modified_at, role " +
                     "from users " +
                     "order by user_id desc " +
                     "limit :limit offset :offset ",

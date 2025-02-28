@@ -32,10 +32,12 @@ Content-Type: application/json
 
 ### GET Users
 GET http://localhost:8000/users?page=1&pageSize=10
+Authorization: {{auth_token}}
 Accept: application/json
 
 ### GET User
 GET http://localhost:8000/users/149395304454860800
+Authorization: {{auth_token}}
 Accept: application/json
 
 
