@@ -14,7 +14,7 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: user-service
+        - id: user-service # Login
           uri: lb://USER-SERVICE
           predicates:
             - Path=/users/login
@@ -22,7 +22,7 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/users/(?<segment>.*), /$\{segment}
-        - id: user-service
+        - id: user-service # Sign Up
           uri: lb://USER-SERVICE
           predicates:
             - Path=/users/signup
@@ -30,7 +30,15 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/users/(?<segment>.*), /$\{segment}
-        - id: user-service
+        - id: user-service # Actuator
+          uri: lb://USER-SERVICE
+          predicates:
+            - Path=/users/actuator/**
+          filters:
+            - RemoveRequestHeader=Cookie
+            - RewritePath=/users/actuator/(?<segment>.*), /actuator/$\{segment}
+            - JwtAuthorizationFilter
+        - id: user-service # Etc
           uri: lb://USER-SERVICE
           predicates:
             - Path=/users/**

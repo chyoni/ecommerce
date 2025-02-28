@@ -12,5 +12,4 @@ include('service')
 include('service:user')
 include('service:catalog')
 include('service:orders')
-
-
+include('service:config')

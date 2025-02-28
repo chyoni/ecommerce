@@ -47,7 +47,7 @@ public class WebSecurity {
                 )
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers("/error", "/css/**", "/js/**", "/images/**").permitAll()
-                        .requestMatchers("/signup", "/login").permitAll()
+                        .requestMatchers("/signup", "/login", "/users/healthz").permitAll()
                         .anyRequest().authenticated()
                 );
         return http.build();

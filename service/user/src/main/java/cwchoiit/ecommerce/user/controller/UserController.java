@@ -1,8 +1,6 @@
 package cwchoiit.ecommerce.user.controller;
 
 import cwchoiit.ecommerce.user.service.UserService;
-import cwchoiit.ecommerce.user.service.request.CreateUserRequest;
-import cwchoiit.ecommerce.user.service.response.CreateUserResponse;
 import cwchoiit.ecommerce.user.service.response.UserPageResponse;
 import cwchoiit.ecommerce.user.service.response.UserResponse;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +8,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -23,7 +20,8 @@ public class UserController {
 
     @GetMapping("/healthz")
     public String healthCheck() {
-        log.info("[healthCheck:25] server port: {}", environment.getProperty("local.server.port"));
+        log.info("[healthCheck:25] server port: {} | config server : {}",
+                environment.getProperty("local.server.port"), environment.getProperty("config.ecommerce"));
         return "welcome";
     }
 
