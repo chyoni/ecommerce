@@ -4,6 +4,11 @@ server:
 spring:
   application:
     name: user-service
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
   datasource:
     url: jdbc:h2:tcp://localhost/~/h2/db/ecommerce-users
     username: sa
@@ -26,4 +31,4 @@ management:
   endpoints:
     web:
       exposure:
-        include: refresh, health, beans # refresh 를 호출해서, 공통 설정 파일의 값이 변경되어도 유저 서비스들을 재시작하는 게 아니라 유저서비스에 대해 이 refresh 를 호출하여 바로 반영시킬 수 있다.
+        include: refresh, health, beans, busrefresh # refresh 를 호출해서, 공통 설정 파일의 값이 변경되어도 유저 서비스들을 재시작하는 게 아니라 유저서비스에 대해 이 refresh 를 호출하여 바로 반영시킬 수 있다.

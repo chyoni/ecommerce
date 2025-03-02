@@ -4,10 +4,19 @@ server:
 spring:
   application:
     name: config-service
+  rabbitmq: # RabbitMQ 사용해서, 이 Config Server 가 바라보고 있는 설정 정보가 변경됐을 때, RabbitMQ 라는 메시지 버스에 연결된 모든 서비스들(유저, API Gateway, ...)이 모두 변경사항이 한번에 적용될 수 있도록 하기 위함
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
   cloud:
     config:
       server:
         git:
           uri: https://github.com/chyoni/ecommerce.git # git 에 올려둔 설정 정보 파일을 읽기
           search-paths: common/config
-
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, busrefresh

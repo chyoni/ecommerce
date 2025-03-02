@@ -5,9 +5,16 @@ GET http://localhost:8000/users/healthz
 Authorization: {{auth_token}}
 Accept: application/json
 
-### POST Actuator 'refresh' (not through api gateway)
+### POST Actuator 'refresh'
 POST http://localhost:8000/users/actuator/refresh
 Authorization: {{auth_token}}
+
+### POST Actuator 'busrefresh'
+POST http://localhost:8000/users/actuator/busrefresh
+Authorization: {{auth_token}}
+
+### POST Actuator 'busrefresh' (Through api gateway)
+POST http://localhost:8000/actuator/busrefresh
 
 ### POST signup
 POST http://localhost:8000/users/signup

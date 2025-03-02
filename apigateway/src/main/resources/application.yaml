@@ -11,6 +11,11 @@ eureka:
 spring:
   application:
     name: apigateway-service
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
   cloud:
     gateway:
       routes:
@@ -62,3 +67,9 @@ spring:
             baseMessage: Ecommerce Logging Filter
             preLogger: true
             postLogger: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, refresh, beans, busrefresh
