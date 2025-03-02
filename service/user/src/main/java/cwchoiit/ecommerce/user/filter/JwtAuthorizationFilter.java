@@ -40,6 +40,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
         Users findUser = usersRepository.findByUserId(Long.valueOf(userId))
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with userId: " + userId));
 
+        // credentials 는 패스워드인데 Spring Security 는 패스워드를 내부적으로 보안을 위해 null 처리함.
         return new UsernamePasswordAuthenticationToken(findUser, null, findUser.getAuthorities());
     }
 }
