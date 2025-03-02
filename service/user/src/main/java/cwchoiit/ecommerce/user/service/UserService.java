@@ -57,7 +57,8 @@ public class UserService implements UserDetailsService {
                 findUser.getUserId(),
                 findUser.getRole(),
                 findUser.getCreatedAt(),
-                findUser.getModifiedAt());
+                findUser.getModifiedAt()
+        );
     }
 
     public UserPageResponse getUsers(Long page, Long pageSize) {

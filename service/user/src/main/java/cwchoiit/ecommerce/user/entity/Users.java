@@ -47,14 +47,6 @@ public class Users implements UserDetails {
         return users;
     }
 
-    public static Users loadUser(String email, String encryptedPassword, Role role) {
-        Users users = new Users();
-        users.email = email;
-        users.encryptedPassword = encryptedPassword;
-        users.role = role;
-        return users;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> authorities = new ArrayList<>();

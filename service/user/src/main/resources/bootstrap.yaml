@@ -1,5 +1,7 @@
 spring:
+  profiles:
+    active: dev # 내가 이걸 dev 로 설정하면, 프로필이 dev 로 설정되고, 가져오는 설정 파일도 xxxx-dev.yaml 을 가져온다.
   cloud:
     config:
       uri: http://localhost:8888
-      name: ecommerce # Spring Cloud Config 에서 관리하는 설정 파일을 읽는다. 이 방식이 주는 이점은, 설정값을 변경하고 애플리케이션을 다시 시작하지 않아도 설정값만 따로 관리하는 Config Server 를 바라보고 설정값을 유동적으로 가져올 수 있다.
+      name: ecommerce # Spring Cloud Config 에서 관리하는 설정 파일(ecommerce.yaml)을 읽는다. 이 방식이 주는 이점은, 설정값을 변경하고 애플리케이션을 다시 시작하지 않아도 설정값만 따로 관리하는 Config Server 를 바라보고 설정값을 유동적으로 가져올 수 있다.
