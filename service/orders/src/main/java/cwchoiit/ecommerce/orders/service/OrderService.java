@@ -43,7 +43,7 @@ public class OrderService {
 
         return OrderPageResponse.from(
                 orders,
-                PageLimitCalculator.calculatePageLimit(page, pageSize, 10L)
+                ordersRepository.count(userId, PageLimitCalculator.calculatePageLimit(page, pageSize, 10L))
         );
     }
 

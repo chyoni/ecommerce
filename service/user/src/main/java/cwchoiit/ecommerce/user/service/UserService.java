@@ -1,6 +1,7 @@
 package cwchoiit.ecommerce.user.service;
 
 import cwchoiit.ecommerce.common.snowflake.Snowflake;
+import cwchoiit.ecommerce.user.client.OrderServiceClient;
 import cwchoiit.ecommerce.user.entity.Users;
 import cwchoiit.ecommerce.user.repository.UsersRepository;
 import cwchoiit.ecommerce.user.service.request.CreateUserRequest;
@@ -10,7 +11,6 @@ import cwchoiit.ecommerce.user.service.response.UserResponse;
 import cwchoiit.ecommerce.user.utils.PageLimitCalculator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static cwchoiit.ecommerce.user.client.OrderServiceClient.*;
 import static cwchoiit.ecommerce.user.entity.Users.Role.ROLE_USER;
 
 @Slf4j
@@ -31,6 +32,7 @@ public class UserService implements UserDetailsService {
     private final Snowflake snowflake = new Snowflake();
     private final UsersRepository usersRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final OrderServiceClient orderServiceClient;
 
     @Transactional
     public CreateUserResponse createUser(CreateUserRequest request) {
@@ -51,11 +53,14 @@ public class UserService implements UserDetailsService {
         Users findUser = usersRepository.findByUserId(userId)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
+        UserOrdersPreviewResponse previewOrders = orderServiceClient.getOrdersPreview(userId);
+
         return UserResponse.from(
                 findUser.getEmail(),
                 findUser.getName(),
                 findUser.getUserId(),
                 findUser.getRole(),
+                previewOrders,
                 findUser.getCreatedAt(),
                 findUser.getModifiedAt()
         );
@@ -69,6 +74,7 @@ public class UserService implements UserDetailsService {
                                 user.getName(),
                                 user.getUserId(),
                                 user.getRole(),
+                                orderServiceClient.getOrdersPreview(user.getUserId()),
                                 user.getCreatedAt(),
                                 user.getModifiedAt()
                         )

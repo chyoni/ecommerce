@@ -1,4 +1,4 @@
-# USER SERVICE
+### USER SERVICE
 
 ### GET User Service Health Check
 GET http://localhost:8000/users/healthz
@@ -43,13 +43,46 @@ Authorization: {{auth_token}}
 Accept: application/json
 
 ### GET User
-GET http://localhost:8000/users/149395304454860800
+GET http://localhost:8000/users/152759595850260480
 Authorization: {{auth_token}}
 Accept: application/json
 
+### ORDERS SERVICE
 
-# CATALOG SERVICE
+### GET Orders Service Health check
+GET http://localhost:8000/orders/healthz
+Authorization: {{auth_token}}
+Accept: application/json
+
+### GET Orders by UserId
+GET http://localhost:8000/orders/152759595850260480?page=1&pageSize=10
+Authorization: {{auth_token}}
+Accept: application/json
+
+### POST Orders Service Create
+POST http://localhost:8000/orders/152759595850260480
+Accept: application/json
+Content-Type: application/json
+
+{
+  "productId": 154489845712207872,
+  "quantity": 1,
+  "unitPrice": 5000000
+}
+
+### CATALOG SERVICE
 
 ### GET Catalog Service Health Check
 GET http://localhost:8000/catalogs/healthz
 Accept: application/json
+
+### POST Catalog Service Create
+POST http://localhost:8000/catalogs
+Accept: application/json
+Content-Type: application/json
+
+{
+    "productName": "Macbook M4",
+    "stock": 1000,
+    "unitPrice": 5000000
+}

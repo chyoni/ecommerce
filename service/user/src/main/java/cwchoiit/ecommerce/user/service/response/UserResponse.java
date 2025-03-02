@@ -5,6 +5,7 @@ import lombok.ToString;
 
 import java.time.LocalDateTime;
 
+import static cwchoiit.ecommerce.user.client.OrderServiceClient.*;
 import static cwchoiit.ecommerce.user.entity.Users.Role;
 
 @Getter
@@ -14,6 +15,7 @@ public class UserResponse {
     private String name;
     private Long userId;
     private Role role;
+    private UserOrdersPreviewResponse orderPreview;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 
@@ -21,6 +23,7 @@ public class UserResponse {
                                     String name,
                                     Long userId,
                                     Role role,
+                                    UserOrdersPreviewResponse orderPreview,
                                     LocalDateTime createdAt,
                                     LocalDateTime modifiedAt) {
         UserResponse userResponse = new UserResponse();
@@ -28,6 +31,7 @@ public class UserResponse {
         userResponse.name = name;
         userResponse.role = role;
         userResponse.userId = userId;
+        userResponse.orderPreview = orderPreview;
         userResponse.createdAt = createdAt;
         userResponse.modifiedAt = modifiedAt;
         return userResponse;
