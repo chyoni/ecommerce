@@ -1,2 +1,5 @@
 config:
   ecommerce: Common Ecommerce Default!!
+
+endpoints:
+  order-service: http://localhost:8000/orders

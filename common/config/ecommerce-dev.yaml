@@ -1,2 +1,5 @@
 config:
   ecommerce: Common Ecommerce Dev!!
+
+endpoints:
+  order-service: http://localhost:8000/orders
