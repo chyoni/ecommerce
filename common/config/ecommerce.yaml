@@ -3,3 +3,4 @@ config:
 
 endpoints:
   order-service: http://localhost:8000/orders
+  user-service: http://localhost:8000/users
