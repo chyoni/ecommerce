@@ -19,11 +19,11 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: user-service # Health check
+        - id: user-service # User Service - Health check
           uri: lb://USER-SERVICE
           predicates:
             - Path=/users/healthz
-        - id: user-service # Login
+        - id: user-service # User Service - Login
           uri: lb://USER-SERVICE
           predicates:
             - Path=/users/login
@@ -31,7 +31,7 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/users/(?<segment>.*), /$\{segment}
-        - id: user-service # Sign Up
+        - id: user-service # User Service - Sign Up
           uri: lb://USER-SERVICE
           predicates:
             - Path=/users/signup
@@ -39,7 +39,7 @@ spring:
           filters:
             - RemoveRequestHeader=Cookie
             - RewritePath=/users/(?<segment>.*), /$\{segment}
-        - id: user-service # Actuator
+        - id: user-service # User Service - Actuator
           uri: lb://USER-SERVICE
           predicates:
             - Path=/users/actuator/**
@@ -47,20 +47,24 @@ spring:
             - RemoveRequestHeader=Cookie
             - RewritePath=/users/actuator/(?<segment>.*), /actuator/$\{segment}
             - JwtAuthorizationFilter
-        - id: user-service # Etc
+        - id: user-service # User Service - Etc
           uri: lb://USER-SERVICE
           predicates:
             - Path=/users/**
           filters:
             - JwtAuthorizationFilter
-        - id: catalog-service
+        - id: catalog-service # Catalog Service
           uri: lb://CATALOG-SERVICE
           predicates:
             - Path=/catalogs/**
-        - id: order-service
+          filters:
+            - JwtAuthorizationFilter
+        - id: order-service # Order Service
           uri: lb://ORDERS-SERVICE
           predicates:
             - Path=/orders/**
+          filters:
+            - JwtAuthorizationFilter
       default-filters:
         - name: LoggingFilter
           args:

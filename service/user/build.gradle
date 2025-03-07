@@ -10,7 +10,8 @@ dependencies {
     implementation 'org.springframework.cloud:spring-cloud-starter-bus-amqp'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
-    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    // Swagger OAS
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.5'
 
     runtimeOnly 'com.h2database:h2'
 

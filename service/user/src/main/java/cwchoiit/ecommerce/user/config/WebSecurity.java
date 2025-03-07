@@ -48,6 +48,7 @@ public class WebSecurity {
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers("/error", "/css/**", "/js/**", "/images/**").permitAll()
                         .requestMatchers("/signup", "/login", "/users/healthz").permitAll()
+                        .requestMatchers("/swagger-ui/**", "/swagger-resources/**", "/v3/api-docs/**").permitAll()
                         .anyRequest().authenticated()
                 );
         return http.build();

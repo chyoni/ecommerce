@@ -9,6 +9,7 @@
 - RabbitMQ (Cloud Bus)
 - MySQL (Database)
 - Redis (Cache, Database)
+- Swagger OpenAPI (https://github.com/springdoc/springdoc-openapi-demos) (https://springdoc.org/)
 - And so on...
 
 ## Spring Cloud Eureka
