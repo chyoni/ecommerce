@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@Tag(name = "auth-controller", description = "for signup controller.")
+@Tag(name = "Auth", description = "for signup controller.")
 public class AuthController {
 
     private final UserService userService;

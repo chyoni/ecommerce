@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
-@Tag(name = "user-controller", description = "User controller for normal users.")
+@Tag(name = "User", description = "User controller for normal users.")
 public class UserController {
     private final UserService userService;
     private final Environment environment;
