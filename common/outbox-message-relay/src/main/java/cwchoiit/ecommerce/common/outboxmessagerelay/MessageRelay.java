@@ -50,7 +50,7 @@ public class MessageRelay {
         try {
             kafkaTemplate.send(
                     outbox.getEventType().getTopic(),
-                    String.valueOf(outbox.getShardKey()),
+                    String.valueOf(outbox.getShardKey()), // 동일한 key 라면, 동일한 파티션으로 전송된다. 동일한 파티션으로 전송되면 순서가 보장된다.
                     outbox.getPayload()
             ).get(1, TimeUnit.SECONDS); // get()하면 결과를 번환받을 수 있음
 
