@@ -50,7 +50,7 @@ public class MessageRelay {
         try {
             kafkaTemplate.send(
                     outbox.getEventType().getTopic(),
-                    String.valueOf(outbox.getShardKey()), // 동일한 key 라면, 동일한 파티션으로 전송된다. 동일한 파티션으로 전송되면 순서가 보장된다.
+                    String.valueOf(outbox.getShardKey()), // 동일한 key 라면, 동일한 파티션으로 전송된다. 동일한 파티션으로 전송되면 순서가 보장된다. Kafka 는 내부적으로 이 key 가 null 이면 라운드로빈 방식으로 자동 분배한다.
                     outbox.getPayload()
             ).get(1, TimeUnit.SECONDS); // get()하면 결과를 번환받을 수 있음
 
