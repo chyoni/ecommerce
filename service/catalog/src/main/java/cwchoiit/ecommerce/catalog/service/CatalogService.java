@@ -25,6 +25,7 @@ public class CatalogService {
     private final Snowflake snowflake = new Snowflake();
     private final List<EventHandler<? extends EventPayload>> eventHandlers;
 
+    @Transactional
     @SuppressWarnings("unchecked")
     public <T extends EventPayload> void handleEvent(Event<T> event) {
         for (EventHandler<? extends EventPayload> eventHandler : eventHandlers) {

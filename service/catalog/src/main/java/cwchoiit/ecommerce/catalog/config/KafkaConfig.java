@@ -10,12 +10,14 @@ import org.springframework.kafka.listener.ContainerProperties;
 public class KafkaConfig {
     /**
      * {@link ConcurrentKafkaListenerContainerFactory}는, Kafka Listener 를 생성하고, 병렬 처리를 어떻게 할지 설정한다.
+     * 이 빈의 이름이 매우 중요한데, 이 컨테이너에 맞게 KafkaListener 의 containerFactory 를 지정해줘야 한다.
+     * KafkaListener 의 containerFactory 기본 이름이 {@code kafkaListenerContainerFactory}인데, 만약 다르게 설정했다면 반드시 지정해줘야 한다.
      *
      * @param consumerFactory Kafka Consumer 인스턴스를 생성할 때 필요한 설정들을 담고 있는 팩토리객체이다.
      * @return {@link ConcurrentKafkaListenerContainerFactory}
      */
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, String> productKafkaListenerContainerFactory(ConsumerFactory<String, String> consumerFactory) {
+    public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory(ConsumerFactory<String, String> consumerFactory) {
         // 여기서 생성된 factory 를 통해 실제 Kafka Listener(컨테이너)들이 만들어지고 동작하게 된다.
         ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
 

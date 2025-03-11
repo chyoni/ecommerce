@@ -61,6 +61,7 @@ Accept: application/json
 
 ### POST Orders Service Create
 POST http://localhost:8000/orders/152759595850260480
+Authorization: {{auth_token}}
 Accept: application/json
 Content-Type: application/json
 

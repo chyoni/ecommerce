@@ -17,7 +17,10 @@ import static cwchoiit.ecommerce.common.event.EventType.Topic.ECOMMERCE_ORDER;
 public class CatalogKafkaConsumer {
     private final CatalogService catalogService;
 
-    @KafkaListener(topics = { ECOMMERCE_ORDER })
+    @KafkaListener(
+            topics = { ECOMMERCE_ORDER },
+            containerFactory = "kafkaListenerContainerFactory"
+    )
     public void listen(String message, Acknowledgment ack) {
         log.info("[listen:21] message: {}", message);
         Event<EventPayload> event = Event.fromJson(message);

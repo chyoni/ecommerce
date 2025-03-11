@@ -6,11 +6,13 @@ import cwchoiit.ecommerce.common.event.Event;
 import cwchoiit.ecommerce.common.event.payload.OrderCreatedEventPayload;
 import cwchoiit.ecommerce.common.event.payload.OrderDeletedEventPayload;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import static cwchoiit.ecommerce.common.event.EventType.ORDER_CREATED;
 import static cwchoiit.ecommerce.common.event.EventType.ORDER_DELETED;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class OrderDeleteEventHandler implements EventHandler<OrderDeletedEventPayload> {
@@ -19,6 +21,7 @@ public class OrderDeleteEventHandler implements EventHandler<OrderDeletedEventPa
 
     @Override
     public void handle(Event<OrderDeletedEventPayload> event) {
+        log.info("[handle:22] event type : {}", event.getEventType());
         OrderDeletedEventPayload payload = event.getEventPayload();
 
         Catalog catalog = catalogRepository.findByProductId(payload.getProductId()).orElseThrow();
