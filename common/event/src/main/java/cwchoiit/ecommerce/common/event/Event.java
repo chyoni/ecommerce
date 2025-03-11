@@ -34,9 +34,16 @@ public class Event<T extends EventPayload> {
      * @return {@link Event<EventPayload>}
      */
     public static Event<EventPayload> fromJson(String json) {
-        EventRow eventRowData = Objects.requireNonNull(Serializer.deserialize(json, EventRow.class));
+        EventRow eventRowData = Serializer.deserialize(json, EventRow.class);
+        if (eventRowData == null) {
+            return null;
+        }
 
-        EventType eventType = Objects.requireNonNull(EventType.from(eventRowData.eventType));
+        EventType eventType = EventType.from(eventRowData.eventType);
+        if (eventType == null) {
+            return null;
+        }
+
         EventPayload eventPayload = Serializer.deserialize(eventRowData.eventPayload, eventType.getPayloadClass());
 
         return Event.of(

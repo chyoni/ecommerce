@@ -1,5 +1,7 @@
 package cwchoiit.ecommerce.orders.service;
 
+import cwchoiit.ecommerce.common.event.payload.OrderCreatedEventPayload;
+import cwchoiit.ecommerce.common.outboxmessagerelay.OutboxEventPublisher;
 import cwchoiit.ecommerce.common.snowflake.Snowflake;
 import cwchoiit.ecommerce.orders.entity.Orders;
 import cwchoiit.ecommerce.orders.repository.OrdersRepository;
@@ -15,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static cwchoiit.ecommerce.common.event.EventType.*;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -22,6 +26,7 @@ import java.util.List;
 public class OrderService {
     private final Snowflake snowflake = new Snowflake();
     private final OrdersRepository ordersRepository;
+    private final OutboxEventPublisher outboxEventPublisher;
 
     @Transactional
     public OrderCreateResponse createOrder(Long userId, OrderCreateRequest request) {
@@ -33,6 +38,19 @@ public class OrderService {
                         request.getQuantity(),
                         request.getUnitPrice()
                 )
+        );
+
+        outboxEventPublisher.publish(
+                ORDER_CREATED,
+                OrderCreatedEventPayload.builder()
+                        .userId(newOrder.getUserId())
+                        .orderId(newOrder.getOrderId())
+                        .productId(newOrder.getProductId())
+                        .quantity(newOrder.getQuantity())
+                        .unitPrice(newOrder.getUnitPrice())
+                        .totalPrice(newOrder.getTotalPrice())
+                        .build(),
+                newOrder.getUserId()
         );
 
         return OrderCreateResponse.from(newOrder);

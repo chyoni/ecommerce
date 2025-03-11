@@ -9,8 +9,14 @@ spring:
     port: 5672
     username: guest
     password: guest
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+  kafka:
+    bootstrap-servers: 127.0.0.1:9092
   datasource:
-    url: jdbc:h2:tcp://localhost/~/h2/db/ecommerce-orders
+    url: jdbc:h2:tcp://localhost:9093/~/h2/db/ecommerce-orders
     username: sa
     password:
     driver-class-name: org.h2.Driver

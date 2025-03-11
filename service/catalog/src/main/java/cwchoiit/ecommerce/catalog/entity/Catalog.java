@@ -36,4 +36,14 @@ public class Catalog {
 
         return catalog;
     }
+
+    public void decreaseStock(Long stock) {
+        this.stock -= stock;
+        modifiedAt = LocalDateTime.now();
+    }
+
+    public void increaseStock(Long stock) {
+        this.stock += stock;
+        modifiedAt = LocalDateTime.now();
+    }
 }
