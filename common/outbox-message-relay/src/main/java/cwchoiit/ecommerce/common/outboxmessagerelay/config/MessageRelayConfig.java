@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -29,6 +28,7 @@ public class MessageRelayConfig {
 
     /**
      * 이 KafkaTemplate 을 이용하여 Producer 들이 이벤트를 Kafka 로 전송할 수 있다.
+     *
      * @return {@code KafkaTemplate<String, String>}
      */
     @Bean
@@ -43,6 +43,7 @@ public class MessageRelayConfig {
 
     /**
      * 트랜잭션이 정상 커밋된 후 비동기적으로 이벤트를 Kafka 로 보낼때 사용될 스레드 풀.
+     *
      * @return {@link Executor}
      */
     @Bean
@@ -57,6 +58,7 @@ public class MessageRelayConfig {
 
     /**
      * 이벤트 전송이 10초가 지나도, 발송되지 않은 것들을 polling 하여 전송하는데 사용될 스레드 풀
+     *
      * @return {@link Executor}
      */
     @Bean
